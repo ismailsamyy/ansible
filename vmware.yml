@@ -1,0 +1,70 @@
+
+---
+- name: Deploy Virtual Machine on ESXi
+  hosts: all
+  
+  gather_facts:false 
+  tasks:
+    - name: Deploy a virtual machine
+      community.vmware.vmware_vm_vm_drs:
+        hostname: "{{ 192.168.100.181 }}"
+        username: "{{ root }}"
+        password: "{{ 1598753Ww- }}"
+
+
+        folder: /
+        name: "{{ test2 }}"
+        state: "poweredoff"
+
+        hardware:
+          memory_mb: "{{ 2000 }}"
+          num_cpus: "{{ 2 }}"
+          scsi: "pvscsi"
+          networks:
+            - name: "{{ vm_network }}"
+              type: "distributedVirtualPortgroup"
+              start_connected: yes
+          disks:
+            - size_gb: "{{ 1 }}"
+              type: "thin"
+              datastore: "{{ ansibled }}"
+              controller: "pvscsi"
+
+        wait_for_ip_address: yes
+      delegate_to: localhost
+
+---
+- name: Deploy Virtual Machine on ESXi
+  hosts: all
+  become:true
+  gather_facts:false
+  tasks:
+    - name: Deploy a virtual machine
+      community.vmware.vmware_vm_vm_drs:
+        hostname: "{{ 192.168.100.181 }}"
+        username: "{{ root }}"
+        password: "{{ 1598753Ww- }}"
+        
+        
+        folder: /
+        name: "{{ test2 }}"
+        state: "poweredoff"
+          
+        hardware:
+          memory_mb: "{{ 2000 }}"
+          num_cpus: "{{ 2 }}"
+          scsi: "pvscsi"
+          networks:
+            - name: "{{ vm_network }}"
+              type: "distributedVirtualPortgroup"
+              start_connected: yes
+          disks:
+            - size_gb: "{{ 1 }}"
+              type: "thin"
+              datastore: "{{ ansibled }}"
+              controller: "pvscsi"
+        
+        wait_for_ip_address: yes
+      delegate_to: localhost
+
+ 

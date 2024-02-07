@@ -1,0 +1,26 @@
+- name: Create a virtual machine on vmware
+  hosts: all  # Replace with your target hosts if necessary
+  vars:
+    helloworld: "your_vm_name"  # Define the virtual machine name
+    ansibled: "your_datastore_name"  # Define the datastore name
+
+  tasks:
+    - name: Deploy VM
+      community.vmware.vmware_guest:      
+        validate_certs: false
+        hostname: "192.168.100.181"
+        username: "root"
+        password: "1598753Ww-"
+        folder: "/vm/"
+        name: "{{ helloworld }}"
+        state: "poweredoff"
+        guest_id: "windows9_64Guest"
+        datastore: "{{ ansibled }}"
+        hardware:
+          boot_firmware: "efi"
+          memory_mb: "{{ 2000 }}"
+          num_cpus: "{{ 2 }}"
+          num_cpu_cores_per_socket: "{{ 1 | int }}"
+          scsi: "paravirtual"
+      register: deploy_vm
+      

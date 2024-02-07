@@ -1,0 +1,30 @@
+---
+- hosts: all
+  tasks:
+    - name: Create a virtual machine on given ESXi hostname
+      vmware_guest:
+        hostname: "192.168.100.181"
+        username: "root"
+        password: "1598753Ww-"
+        validate_certs: no
+        folder: "/vm/"
+        name: "test_vm_0006"
+        state: "poweredoff"
+        guest_id: "centos64Guest"
+        disk:
+          - size_gb: 1
+            type: thin
+            datastore: "ansibled"
+        hardware:
+          memory_mb: 512
+          num_cpus: 1
+          scsi: "paravirtual"
+        networks:
+          - name: "VM Network"
+            mac: "aa:bb:dd:aa:00:14"
+            ip: "192.168.100.184"
+            netmask: "255.255.255.0"
+            device_type: "vmxnet3"
+        wait_for_ip_address: yes
+      delegate_to: localhost
+      register: deploy_vm
