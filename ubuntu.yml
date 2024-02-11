@@ -1,0 +1,27 @@
+---
+- hosts: [ubuntu] 
+  tasks: 
+  - name: instasll package for ubuntu server
+    tags: Ubuntu
+    ansible.builtin.apt:
+      
+      name: "{{ package_name}}"
+      state: latest
+       
+        
+    when: ansible_distribution == "Ubuntu"
+  - name: uninstall package for ubuntu
+    tags: Ubuntu2
+    ansible.builtin.apt:
+      name: " {{ package_name_2}}" 
+    
+      state: absent
+  - name: copy default html file for site 
+    tags: apache 
+    ansible.builtin.copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644 
+

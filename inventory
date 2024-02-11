@@ -1,2 +1,5 @@
 192.168.100.128
 192.168.100.181
+[ubuntu]
+192.168.100.208 package_name=mariadb-server,apache2 package_name_2=mariadb-server
+

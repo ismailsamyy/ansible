@@ -1,0 +1,10 @@
+---
+- hosts: [ubuntu] 
+  tasks: 
+  - name: instasll apache for redhat server 
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+        
