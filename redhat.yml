@@ -1,0 +1,25 @@
+---
+- hosts: [controller]
+  tasks:
+  - name: install httpd server
+    ansible.builtin.yum:
+      name: httpd 
+  - name: start httpd 
+    tags: apache,httpd,redhat
+    ansible.builtin.service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: change e-mail address
+    tags: apache,httpd 
+    ansible.builtin.lineinfile:
+       path: /etc/httpd/conf/httpd.conf
+       regexp: '^ServerAdmin'
+       line: ServerAdmin root@localhost
+    register: httpd   
+  - name: restart httpd
+    tags: apache,httpd
+    ansible.builtin.service:
+      name: httpd
+      state: restarted
+    when: httpd.changed

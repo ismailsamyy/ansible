@@ -1,5 +1,5 @@
 ---
-- hosts: [ubuntu] 
+- hosts: ["ubuntu","controller"] 
   tasks: 
   - name: instasll package for ubuntu server
     tags: Ubuntu
@@ -23,5 +23,20 @@
       dest: /var/www/html/index.html
       owner: root
       group: root
-      mode: 0644 
+      mode: 0644
+  - name: install unzip
+    tags: terraform
+    ansible.builtin.package:
+       name: unzip
+ 
+  - name: install terraform
+    tags: terraform
+    ansible.builtin.unarchive:
+      src: https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+      owner: root
+      group: root
+ 
 
