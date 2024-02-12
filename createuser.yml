@@ -1,0 +1,21 @@
+---
+- hosts: [ubuntu]
+  tasks:
+  - name: create user named ismailsami
+    tags: useradd
+    ansible.builtin.user:
+      name: ismailsami
+      group: root
+  - name: add ssh key for ismailsami
+    tags: sshkey
+    ansible.builtin.authorized_key:
+      user: ismailsami
+      key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCmVQGxyb9NJb5iVUJ9JLu6hfmgoxWfvE3Kx1NMaheVMZ1tJIZimPteqyEyWo4gHTrXrxKoWTsPIgZwoQ1DTAU9CMZ9NrHF1i1Dz7HupjqJYc1YJOCWL1hui8OrENGg1z33MN/LCX98AIjRY/XVB3o4PEblQIRsXf9zPDrvrIsFYsB/y8TavX8C9cLCnjPelPrpsYUKXaunraDc2NZzCwgyahySMHY6+HHjUwfJIzgbW4ZJdIFJ+q3M71MeMp7EcXzmb72kj/Uu6Kfkf5eUKe+XZffWfdd0JR4IVNn7oE0iqhKlSE72HDQgncTR8mnFlXkpfe31+fyFrpmdSQX6nYTYvN7y3gR/z7vQYY7W4fVSiGsY+5kLw/eNs04wext18I0BCQK7ZRK8Jnu+KVpBhD0nOp/Ic6c4QkXqXP5K8bj0bsJw+CPMD00+IyWTvu47qljSTSXOd/Prw9WqXGXOImLnd136eS+m3D9nlZx9UGSDiOrbiXOERejMJMF6Fv7tLTE= root@server.iti.com"
+
+  - name: add sudoers file for ismailsami
+    ansible.builtin.copy:
+       src: sudoer_ismailsami
+       dest: /etc/sudoers.d/ismailsami
+       owner: root
+       group: root
+       mode: 0440 
